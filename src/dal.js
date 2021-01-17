@@ -4,7 +4,7 @@ const url = `mongodb+srv://${config.dbUsername}:${config.dbPassword}@cluster0.rj
 let client;
 
 const connect = () => {
-    console.log("connect to DB url:", url)
+    console.log("connecting to DB url:", url)
     console.log('config:', config)
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, (err, dbClient) => {
@@ -25,7 +25,7 @@ const disconnect = () => {
 }
 
 const findOne = async (collectionName, filter) => {
-    //console.log('findOne collection:', collectionName, 'filter:', filter);
+    console.log('findOne collection:', collectionName, 'filter:', filter);
     const db = client.db(config.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).findOne(filter, (err, result) => {
@@ -41,6 +41,7 @@ const findOne = async (collectionName, filter) => {
 }
 
 const insertOne = async (collectionName, data) => {
+    console.log('insertOne collection:', collectionName, 'filter:', data);
     const db = client.db(config.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).insertOne(data, (err, result) => {
