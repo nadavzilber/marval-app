@@ -20,6 +20,59 @@ const connect = () => {
     });
 }
 
+const disconnect = () => {
+    client.close();
+}
+
+const findOne = async (collectionName, filter) => {
+    //console.log('findOne collection:', collectionName, 'filter:', filter);
+    const db = client.db(config.dbName);
+    return new Promise((resolve, reject) => {
+        db.collection(collectionName).findOne(filter, (err, result) => {
+            if (err) {
+                //console.log('failed', err)
+                reject(err);
+            } else {
+                //console.log('success', result)
+                resolve(result);
+            }
+        })
+    })
+}
+
+const insertOne = async (collectionName, data) => {
+    const db = client.db(config.dbName);
+    return new Promise((resolve, reject) => {
+        db.collection(collectionName).insertOne(data, (err, result) => {
+            if (err) {
+                //console.log('insertOne failed', err)
+                reject(err);
+            } else {
+                //console.log('insertOne success')
+                resolve(result);
+            }
+        })
+    })
+}
+
+const updateOne = async (collectionName, data) => {
+    const { query, newData } = data;
+    const db = client.db(config.dbName);
+    const newValues = { $set: { ...newData } };
+    //console.log('query:', query, 'newValues:', newValues)
+    return new Promise((resolve, reject) => {
+        db.collection(collectionName).updateOne(query, newValues, (err, result) => {
+            if (err) {
+                //console.log('insertOne failed', err)
+                reject(err);
+            } else {
+                //console.log('insertOne success')
+                resolve(result);
+            }
+        })
+    })
+}
+
 module.exports = {
-    connect: connect
+    connect, disconnect, findOne, insertOne, updateOne
 }
