@@ -1,11 +1,10 @@
-const config = require('./config');
+const {mongo} = require('./config');
 const MongoClient = require('mongodb').MongoClient;
-const url = `mongodb+srv://${config.dbUsername}:${config.dbPassword}@cluster0.rjybf.mongodb.net/${config.dbName}?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${mongo.dbUsername}:${mongo.dbPassword}@cluster0.rjybf.mongodb.net/${mongo.dbName}?retryWrites=true&w=majority`;
 let client;
 
-const connect = () => {
+const connectToMongo = () => {
     console.log("connecting to DB url:", url)
-    console.log('config:', config)
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, (err, dbClient) => {
             if (err) {
@@ -20,13 +19,13 @@ const connect = () => {
     });
 }
 
-const disconnect = () => {
+const disconnectFromMongo = () => {
     client.close();
 }
 
 const findOne = async (collectionName, filter) => {
     console.log('findOne collection:', collectionName, 'filter:', filter);
-    const db = client.db(config.dbName);
+    const db = client.db(mongo.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).findOne(filter, (err, result) => {
             if (err) {
@@ -42,7 +41,7 @@ const findOne = async (collectionName, filter) => {
 
 const insertOne = async (collectionName, data) => {
     console.log('insertOne collection:', collectionName, 'filter:', data);
-    const db = client.db(config.dbName);
+    const db = client.db(mongo.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).insertOne(data, (err, result) => {
             if (err) {
@@ -58,7 +57,7 @@ const insertOne = async (collectionName, data) => {
 
 const updateOne = async (collectionName, data) => {
     const { query, newData } = data;
-    const db = client.db(config.dbName);
+    const db = client.db(mongo.dbName);
     const newValues = { $set: { ...newData } };
     //console.log('query:', query, 'newValues:', newValues)
     return new Promise((resolve, reject) => {
@@ -75,5 +74,5 @@ const updateOne = async (collectionName, data) => {
 }
 
 module.exports = {
-    connect, disconnect, findOne, insertOne, updateOne
+    connectToMongo, disconnectFromMongo, findOne, insertOne, updateOne
 }
