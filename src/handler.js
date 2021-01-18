@@ -1,4 +1,4 @@
-const { findOne, insertOne } = require('./dal');
+const { findOne, insertOne, updateOne } = require('./dal');
 
 const handleLogin = async (data, res) => {
     try {
@@ -60,6 +60,48 @@ const handleRegister = async (data, res) => {
     }
 }
 
+const getUserInfo = async (data, res) => {
+    try {
+        console.log('getUserInfo', data)
+        if (data.email) {
+            const collectionName = 'users';
+            let response = await findOne(collectionName, { email: data.email });
+            console.log('findOne response:', response)
+            if (!!response)
+                return res.send({ status: true, message: 'User information received', user: response });
+            else
+                res.send({ status: false, message: 'User information was not retrieved' });
+        }
+    } catch (err) {
+        console.log('getUserInfo error caught!!!', err, 'json err:', JSON.stringify(err.message))
+        res.send({
+            status: false,
+            text: `Server error: ${err.message}`
+        });
+    }
+}
+
+const setUserInfo = async (data, res) => {
+    try {
+        console.log('setUserInfo', data)
+        if (data.query.email) {
+            const collectionName = 'users';
+            let response = await updateOne(collectionName, { query: { email: data.query.email }, newData: { ...data.newData } });
+            console.log('updateOne response:', response)
+            if (!!response && response.modifiedCount > 0)
+                return res.send({ status: true, message: 'User information was updated' });
+            else
+                res.send({ status: false, message: 'User information was not updated' });
+        }
+    } catch (err) {
+        console.log('setUserInfo error caught!!!', err, 'json err:', JSON.stringify(err.message))
+        res.send({
+            status: false,
+            text: `Server error: ${err.message}`
+        });
+    }
+}
+
 module.exports = {
-    handleRegister, handleLogin
+    handleRegister, handleLogin, getUserInfo, setUserInfo
 }
