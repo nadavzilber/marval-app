@@ -1,0 +1,113 @@
+.login-wrapper {
+    display: grid;
+    max-width: 50%;
+    align-items: center;
+    height: 100vh;
+    margin: auto;
+}
+.form-login {
+    padding: 50px;
+    border: 1px solid #e7e7e7;
+    background-color: #f9f9f9;
+    box-shadow: 8px 8px 25px -25px black;
+}
+
+.form-title {
+    margin: 0;
+    text-align: center;
+    color: rgb(48 65 155 / 85%);
+}
+
+.form-group {
+    margin: 30px 0;
+}
+
+.form-group-input {
+    position: relative;
+}
+
+.form-input {
+    border: 0;
+    padding: 4px 0;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    width: 100%;
+    font: 15px/24px "Muli", sans-serif;
+    color: #333;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-bottom: 2px solid #333;
+}
+
+.form-input ~ label {
+    z-index: auto !important;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 9px;
+    color: #252525;
+    transition: 0.3s;
+    z-index: -1;
+    letter-spacing: 0.5px;
+}
+
+.form-input:focus ~ label, .form-input:valid ~ label {
+    top: -16px;
+    font-size: 12px;
+    color: #209d79;
+    transition: 0.3s;
+}
+
+.form-group-checkbox {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 10px;
+}
+
+.form-group-checkbox label {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 2px solid #30419b;
+}
+.form-group-services, .form-group-brands {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5px;
+}
+
+.form-checkbox-input {
+    display: none;
+}
+
+.form-checkbox-input:checked + label {
+    background-color: #30419b;
+    color: #fff
+}
+
+.form-checkbox-input + label:hover {
+    transition: transform .2s;
+    transform: scale(1.1);
+}
+
+.form-login-btn {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 0;
+    border: 2px solid #209d79;
+    background-color: #00c47d;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.form-login-btn:hover {
+    border: 2px solid #209d79;
+    background-color: #209d79;
+    color: #ffffff;
+}
