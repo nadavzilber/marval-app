@@ -1,0 +1,32 @@
+.sort-by {
+    border: 1px solid black;
+    cursor: pointer;
+    color: white;
+    background-color: #568756;
+    font-size: 23px;
+}
+
+.sort-by:hover {
+    background-color: #357235;
+}
+
+.issue-container {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.comics-table {
+    border: 1px solid black;
+    /* width: 500px;
+    height: 650px; */
+}
+
+.body-row {
+    border: violet 1.75px solid;
+    background: cadetblue;
+}
+
+.body-row td, .header-row th {
+    padding: 10px;
+}

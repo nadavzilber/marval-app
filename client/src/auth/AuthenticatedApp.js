@@ -1,11 +1,13 @@
 import React from 'react';
-import { userAtom } from '../state/atoms';
+import { userAtom, comicsAtom } from '../state/atoms';
 import { useRecoilState } from 'recoil';
 import { getUserInfo, getComics } from '../api';
+import Comics from '../components/Comics';
 
 const AuthenticatedApp = () => {
     const [userData, setUserData] = useRecoilState(userAtom);
-    let queryFilter;
+    let queryFilter = {moshe: true};
+    const [comics, setComics] = useRecoilState(comicsAtom);
 
     const logOut = (e) => {
         e.preventDefault();
@@ -15,16 +17,15 @@ const AuthenticatedApp = () => {
 
     const onGetUserInfo = async (e) => {
         e.preventDefault();
-        const body = { email: userData.email };
-        delete body.isLogged;
-        const response = await getUserInfo(body);
+        const response = await getUserInfo(userData.email);
         console.log('onGetUserInfo response:', response)
     }
 
     const onGetComics = async (e) => {
         e.preventDefault();
         const response = await getComics(queryFilter);
-        console.log('onGetComics response:', response)
+        console.log('onGetComics response:', response);
+        setComics(response.comics.results);
     }
 
     return (
@@ -38,6 +39,8 @@ const AuthenticatedApp = () => {
 
             <button onClick={(e) => onGetUserInfo(e)}>Get My User Info</button>
             <button onClick={(e) => onGetComics(e)}>Get Marval Comics</button>
+            
+            {!!comics && <Comics data={comics} />}
         </>)
 }
 

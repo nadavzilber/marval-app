@@ -9,3 +9,8 @@ export const alertAtom = atom({
     key: 'alertAtom',
     default: null,
 });
+
+export const comicsAtom = atom({
+    key: 'comicsAtom',
+    default: null,
+})

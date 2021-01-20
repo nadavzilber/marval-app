@@ -15,7 +15,8 @@ const handleLogin = async (data, res) => {
                         id: response._id,
                         username: response.username,
                         email: response.email,
-                        password: response.password
+                        password: response.password,
+                        soryByKey: response.soryByKey
                     }
                 })
             else return res.send({ status: false, message: 'Login failed' });
@@ -24,7 +25,7 @@ const handleLogin = async (data, res) => {
         console.log('handleLogin error caught!!!', err, 'json err:', JSON.stringify(err.message))
         res.send({
             status: false,
-            text: `Server error: ${err.message}`
+            message: `Server error: ${err.message}`
         });
     }
 }
@@ -55,17 +56,17 @@ const handleRegister = async (data, res) => {
         console.log('handleLogin error caught!!!', err, 'json err:', JSON.stringify(err.message))
         res.send({
             status: false,
-            text: `Server error: ${err.message}`
+            message: `Server error: ${err.message}`
         });
     }
 }
 
-const getUserInfo = async (data, res) => {
+const getUserInfo = async (email, res) => {
     try {
-        console.log('getUserInfo', data)
-        if (data.email) {
+        console.log('getUserInfo', email);
+        if (email) {
             const collectionName = 'users';
-            let response = await findOne(collectionName, { email: data.email });
+            let response = await findOne(collectionName, { email });
             console.log('findOne response:', response)
             if (!!response)
                 return res.send({ status: true, message: 'User information received', user: response });
@@ -76,7 +77,7 @@ const getUserInfo = async (data, res) => {
         console.log('getUserInfo error caught!!!', err, 'json err:', JSON.stringify(err.message))
         res.send({
             status: false,
-            text: `Server error: ${err.message}`
+            message: `Server error: ${err.message}`
         });
     }
 }
@@ -87,17 +88,20 @@ const setUserInfo = async (data, res) => {
         if (data.query.email) {
             const collectionName = 'users';
             let response = await updateOne(collectionName, { query: { email: data.query.email }, newData: { ...data.newData } });
-            console.log('updateOne response:', response)
+            //console.log('updateOne response:', response)
+            console.log('success?', !!response && response.modifiedCount > 0)
             if (!!response && response.modifiedCount > 0)
                 return res.send({ status: true, message: 'User information was updated' });
             else
-                res.send({ status: false, message: 'User information was not updated' });
+                return res.send({ status: false, message: 'User information was not updated' });
+        } else {
+            console.log('else')
         }
     } catch (err) {
         console.log('setUserInfo error caught!!!', err, 'json err:', JSON.stringify(err.message))
-        res.send({
+        return res.send({
             status: false,
-            text: `Server error: ${err.message}`
+            message: `Server error: ${err.message}`
         });
     }
 }

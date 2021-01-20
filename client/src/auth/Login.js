@@ -50,6 +50,7 @@ const Login = () => {
             const body = { email, password };
             const res = await login(mode, body);
             console.log(mode, 'response:>', res)
+            console.log('TODO::: NEED TO ADD response.soryByKey')
             if (res && res.user) {
                 const editableUserData = { ...res.user };
                 delete editableUserData.id;
