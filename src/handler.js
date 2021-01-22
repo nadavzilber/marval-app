@@ -52,11 +52,15 @@ const handleRegister = async (data, res) => {
 const getUserInfo = async (email, res) => {
     try {
         if (email) {
-            const collectionName = 'users';
-            let response = await findOne(collectionName, { email });
-            if (!!response)
-                return res.send({ status: true, message: 'User information received', user: response });
-            else
+            let response = await findOne('users', { email });
+            if (!!response) {
+                const user = response;
+                response = await find('analytics', { email })
+                if (!!response) {
+                    user.analytics = response;
+                    return res.send({ status: true, message: 'User information (*) received', user });
+                } else res.send({ status: false, message: 'User information (*) was not retrieved' });
+            } else
                 res.send({ status: false, message: 'User information was not retrieved' });
         }
     } catch (err) {

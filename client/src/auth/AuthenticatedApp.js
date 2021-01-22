@@ -1,5 +1,5 @@
 import React from 'react';
-import { userAtom, comicsAtom } from '../state/atoms';
+import { userAtom, comicsAtom, analyticsAtom } from '../state/atoms';
 import { useRecoilState } from 'recoil';
 import { getUserInfo, getComics } from '../api';
 import Comics from '../components/Comics';
@@ -7,6 +7,7 @@ import Analytics from '../components/Analytics';
 
 const AuthenticatedApp = () => {
     const [userData, setUserData] = useRecoilState(userAtom);
+    const [analytics, setAnalytics] = useRecoilState(analyticsAtom);
     let queryFilter = { moshe: true };
     const [comics, setComics] = useRecoilState(comicsAtom);
 
@@ -19,7 +20,9 @@ const AuthenticatedApp = () => {
     const onGetUserInfo = async (e) => {
         e.preventDefault();
         const response = await getUserInfo(userData.email);
-        console.log('onGetUserInfo response:', response)
+        console.log('onGetUserInfo response:', response.user)
+        if (response && response.user && response.user.analytics)
+            setAnalytics(response.user.analytics);
     }
 
     const onGetComics = async (e) => {
