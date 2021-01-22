@@ -6,9 +6,9 @@ const test = async () => {
     console.log('ruok response:', response);
 }
 
-const login = async (mode, body) => {
+const authenticate = async (mode, body) => {
     //console.log('api:::', mode, 'body:', body)
-    const response = await axios.post(`${url}/auth/${mode}`, body);
+    const response = await axios.post(`${url}/user/auth/${mode}`, body);
     return response.data;
 }
 
@@ -32,10 +32,20 @@ const updateAnalytics = async (body) => {
     //console.log('updateAnalytics response:',response)
 }
 
+const getAnalytics = async (email) => {
+    //console.log('updateAnalytics',body)
+    email = encodeURIComponent(email);
+    const response = await axios.get(`${url}/analytics/get?email=${email}`);
+    console.log('api ::: getAnalytics response:', response)
+    if (response && response.data)
+        return response.data;
+    else return null;
+}
+
 const getComics = async (filter) => {
     //console.log('api::: getComics filter:', filter)
     const response = await axios.post(`${url}/marval/comics/`, filter);
     return response.data;
 }
 
-export { test, login, getUserInfo, setUserInfo, updateAnalytics, getComics };
+export { test, authenticate, getUserInfo, setUserInfo, updateAnalytics, getAnalytics, getComics };

@@ -1,4 +1,4 @@
-const {mongo} = require('./config');
+const { mongo } = require('./config');
 const MongoClient = require('mongodb').MongoClient;
 const url = `mongodb+srv://${mongo.dbUsername}:${mongo.dbPassword}@cluster0.rjybf.mongodb.net/${mongo.dbName}?retryWrites=true&w=majority`;
 let client;
@@ -23,16 +23,33 @@ const disconnectFromMongo = () => {
     client.close();
 }
 
+const find = async (collectionName, query) => {
+    const db = client.db(mongo.dbName);
+    const options = {
+        sort: { _id: 1 }
+    };
+    let data = [];
+    return new Promise((resolve, reject) => {
+        db.collection(collectionName).find(query, options, async (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                await results.forEach((r) => {
+                    data.push(r)
+                });
+                resolve(data);
+            }
+        });
+    });
+}
+
 const findOne = async (collectionName, filter) => {
-    //console.log('findOne collection:', collectionName, 'filter:', filter);
     const db = client.db(mongo.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).findOne(filter, (err, result) => {
             if (err) {
-                //console.log('failed', err)
                 reject(err);
             } else {
-                //console.log('success', result)
                 resolve(result);
             }
         })
@@ -40,15 +57,12 @@ const findOne = async (collectionName, filter) => {
 }
 
 const insertOne = async (collectionName, data) => {
-    //console.log('insertOne collection:', collectionName, 'filter:', data);
     const db = client.db(mongo.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).insertOne(data, (err, result) => {
             if (err) {
-                //console.log('insertOne failed', err)
                 reject(err);
             } else {
-                //console.log('insertOne success')
                 resolve(result);
             }
         })
@@ -59,14 +73,11 @@ const updateOne = async (collectionName, data) => {
     const { query, newData } = data;
     const db = client.db(mongo.dbName);
     const newValues = { $set: { ...newData } };
-    //console.log('query:', query, 'newValues:', newValues)
     return new Promise((resolve, reject) => {
         db.collection(collectionName).updateOne(query, newValues, (err, result) => {
             if (err) {
-                //console.log('insertOne failed', err)
                 reject(err);
             } else {
-                //console.log('insertOne success')
                 resolve(result);
             }
         })
@@ -74,5 +85,5 @@ const updateOne = async (collectionName, data) => {
 }
 
 module.exports = {
-    connectToMongo, disconnectFromMongo, findOne, insertOne, updateOne
+    connectToMongo, disconnectFromMongo, find, findOne, insertOne, updateOne
 }

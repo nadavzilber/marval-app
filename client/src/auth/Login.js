@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 //import styled from 'styled-components';
 import { userAtom, alertAtom } from "../state/atoms";
 // import {handleLoginSelector} from "../state/selectors";
-import { test, login } from '../api';
+import { test, authenticate } from '../api';
 import './login.css';
 
 
@@ -30,7 +30,7 @@ const Login = () => {
                 const { username, email, password } = credentials;
                 if (email && password) {
                     const body = { username: username, email: email, password: password };
-                    const res = await login(mode, body);
+                    const res = await authenticate(mode, body);
                     //console.log('checkIfAuth login resp:', res)
                     if (res.status && res.user) {
                         const editableUserData = { ...res.user };
@@ -39,18 +39,18 @@ const Login = () => {
                     } //else console.log("user doesn't exist");
                 }
             }
-        } else {
-            console.log('checkIfAlreadyAuth user us already logged', userData)
-        }
+        } 
+        // else {
+        //     console.log('checkIfAlreadyAuth user us already logged', userData)
+        // }
     }
 
     const handleLogin = async () => {
-        console.log('handleLogin')
+        //console.log('handleLogin')
         if (email.trim().length && password.trim().length) {
             const body = { email, password };
-            const res = await login(mode, body);
+            const res = await authenticate(mode, body);
             console.log('api:::', mode, 'response:>', res)
-            console.log('TODO::: NEED TO ADD response.soryByKey')
             if (res && res.user) {
                 const editableUserData = { ...res.user };
                 delete editableUserData.id;

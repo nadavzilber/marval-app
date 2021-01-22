@@ -95,6 +95,7 @@
 }
 
 .form-login-btn {
+    margin: 7px;
     display: block;
     width: 100%;
     text-decoration: none;
@@ -104,6 +105,7 @@
     background-color: #00c47d;
     color: #ffffff;
     cursor: pointer;
+    font-size: 22px;
 }
 
 .form-login-btn:hover {

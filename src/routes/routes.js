@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { handleLogin, handleRegister, handleAnalytics } = require('../handler');
+const { handleLogin, handleRegister, handleAnalytics, handleGetAnalytics } = require('../handler');
 const userRouter = require('./userRouter');
 const marvalRouter = require('./marvalRouter');
+const analyticsRouter = require('./analyticsRouter');
 
 router.get('/ruok', (req, res) => res.status(200).json({ status: true, message: "I'm OK!" }));
 
@@ -14,6 +15,6 @@ router.use('/user', userRouter);
 
 router.use('/marval', marvalRouter);
 
-router.post('/analytics/add', (req, res) => handleAnalytics(req.body, res));
+router.use('/analytics', analyticsRouter);
 
 module.exports = router;

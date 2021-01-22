@@ -13,4 +13,9 @@ export const alertAtom = atom({
 export const comicsAtom = atom({
     key: 'comicsAtom',
     default: null,
-})
+});
+
+export const analyticsAtom = atom({
+    key: 'analyticsAtom',
+    default: null,
+});

@@ -24,7 +24,8 @@
 
 .body-row {
     border: violet 1.75px solid;
-    background: cadetblue;
+    background: #081438;
+    color: white;
 }
 
 .body-row td, .header-row th {
