@@ -20,23 +20,23 @@ const Login = () => {
     }, [])
 
     const checkIfAuthenticated = async () => {
-        console.log('checkIfAuth', userData)
+        //console.log('checkIfAuth', userData)
         if (!userData || !!userData && !userData.isLogged) {
-            console.log('checking')
+            //console.log('checking')
             let credentials = window.sessionStorage.getItem('credentials');
             credentials = JSON.parse(credentials);
-            console.log('credentials:', credentials)
+            //console.log('credentials:', credentials)
             if (credentials) {
                 const { username, email, password } = credentials;
                 if (email && password) {
                     const body = { username: username, email: email, password: password };
                     const res = await login(mode, body);
-                    console.log('checkIfAuth login resp:', res)
+                    //console.log('checkIfAuth login resp:', res)
                     if (res.status && res.user) {
                         const editableUserData = { ...res.user };
                         delete editableUserData.id;
                         setUserData({ ...res.user, editableUserData, isLogged: true });
-                    } else console.log("user doesn't exist");
+                    } //else console.log("user doesn't exist");
                 }
             }
         } else {
@@ -49,7 +49,7 @@ const Login = () => {
         if (email.trim().length && password.trim().length) {
             const body = { email, password };
             const res = await login(mode, body);
-            console.log(mode, 'response:>', res)
+            console.log('api:::', mode, 'response:>', res)
             console.log('TODO::: NEED TO ADD response.soryByKey')
             if (res && res.user) {
                 const editableUserData = { ...res.user };

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { handleLogin, handleRegister } = require('../handler');
+const { handleLogin, handleRegister, handleAnalytics } = require('../handler');
 const userRouter = require('./userRouter');
 const marvalRouter = require('./marvalRouter');
 
@@ -13,5 +13,7 @@ router.post('/auth/register', (req, res) => handleRegister(req.body, res));
 router.use('/user', userRouter);
 
 router.use('/marval', marvalRouter);
+
+router.post('/analytics/add', (req, res) => handleAnalytics(req.body, res));
 
 module.exports = router;

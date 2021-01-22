@@ -4,16 +4,16 @@ const url = `mongodb+srv://${mongo.dbUsername}:${mongo.dbPassword}@cluster0.rjyb
 let client;
 
 const connectToMongo = () => {
-    console.log("connecting to DB url:", url)
+    //console.log("connecting to DB url:", url)
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, (err, dbClient) => {
             if (err) {
-                console.log('Error occurred while connecting to MongoDB Atlas...');
+                //console.log('Error occurred while connecting to MongoDB Atlas...');
                 client = null;
                 reject(err)
             }
             client = dbClient;
-            console.log('Connected to MongoDB successfully');
+            //console.log('Connected to MongoDB successfully');
             resolve();
         });
     });
@@ -24,7 +24,7 @@ const disconnectFromMongo = () => {
 }
 
 const findOne = async (collectionName, filter) => {
-    console.log('findOne collection:', collectionName, 'filter:', filter);
+    //console.log('findOne collection:', collectionName, 'filter:', filter);
     const db = client.db(mongo.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).findOne(filter, (err, result) => {
@@ -40,7 +40,7 @@ const findOne = async (collectionName, filter) => {
 }
 
 const insertOne = async (collectionName, data) => {
-    console.log('insertOne collection:', collectionName, 'filter:', data);
+    //console.log('insertOne collection:', collectionName, 'filter:', data);
     const db = client.db(mongo.dbName);
     return new Promise((resolve, reject) => {
         db.collection(collectionName).insertOne(data, (err, result) => {

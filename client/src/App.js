@@ -9,8 +9,7 @@ function App() {
   const [userData, setUserData] = useRecoilState(userAtom);
   const closeAlert = (e) => {
     e && e.preventDefault();
-    console.log('close alert')
-    setAlert(null)
+    setAlert(null);
   }
   return (
     <div className="App">

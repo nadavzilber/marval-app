@@ -11,13 +11,7 @@ const handleLogin = async (data, res) => {
             if (!!response)
                 return res.send({
                     status: true,
-                    user: {
-                        id: response._id,
-                        username: response.username,
-                        email: response.email,
-                        password: response.password,
-                        soryByKey: response.soryByKey
-                    }
+                    user: { ...response }
                 })
             else return res.send({ status: false, message: 'Login failed' });
         } else return res.send({ status: false, message: 'Invalid params' });
@@ -106,6 +100,30 @@ const setUserInfo = async (data, res) => {
     }
 }
 
+const handleAnalytics = async (data, res) => {
+    try {
+        console.log('', data)
+        if (data.email && data.sortByKey) {
+            const collectionName = 'analytics';
+            let response = await insertOne(collectionName, { data: new Date().toLocaleString(), email: data.email, sortByKey: data.sortByKey });
+            //console.log('updateOne response:', response)
+            console.log(' success?',!!response, response)
+            if (!!response)
+                return res.send({ status: true, message: 'Analytics was updated' });
+            else
+                return res.send({ status: false, message: 'Analyticsn was not updated' });
+        } else {
+            console.log('else - missing required params')
+        }
+    } catch (err) {
+        console.log(' error caught!!!', err, 'json err:', JSON.stringify(err.message))
+        return res.send({
+            status: false,
+            message: ` Server error: ${err.message}`
+        });
+    }
+}
+
 module.exports = {
-    handleRegister, handleLogin, getUserInfo, setUserInfo
+    handleRegister, handleLogin, getUserInfo, setUserInfo, handleAnalytics
 }

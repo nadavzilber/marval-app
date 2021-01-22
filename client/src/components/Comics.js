@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { setUserInfo } from '../api';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { setUserInfo, updateAnalytics } from '../api';
 import { userAtom } from '../state/atoms';
 import './comics.css';
 
@@ -20,7 +20,8 @@ const Comics = ({ data }) => {
         let sortedList = [...list];
         sortedList = sortedList.sort((a, b) => (a[sortByKey] > b[sortByKey]) ? 1 : -1);
         setList(sortedList);
-        setUserInfo({ query: { email: user.email }, newData: { sortByKey } })
+        setUserInfo({ query: { email: user.email }, newData: { sortByKey } });
+        updateAnalytics({email: user.email, sortByKey});
     }
 
     return (
