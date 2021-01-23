@@ -17,6 +17,7 @@ const Comics = ({ data }) => {
 
     const sortListByKey = async (event) => {
         event.preventDefault();
+        console.log('TODO: if key wasnt changed then dont send to analytics')
         let sortedList = [...list];
         sortedList = sortedList.sort((a, b) => (a[sortByKey] > b[sortByKey]) ? 1 : -1);
         setList(sortedList);
@@ -35,20 +36,21 @@ const Comics = ({ data }) => {
     console.log('Comics.js :: todo: make the favorite button functional');
     return (
         <div>
-            <h4>Comics</h4>
             {issueKeys &&
-                <div className="comics-filter">
-                    <button className="sort-by-button" onClick={(e) => sortListByKey(e)}>Sort by {sortByKey}</button>
-                    <select
-                        className="sort-by-select"
-                        value={sortByKey}
-                        onChange={(e) => setSortByKey(e.target.value)}>
-                        {issueKeys &&
-                            issueKeys.map((issueKey, index) =>
-                                <option key={index} value={issueKey}>
-                                    {issueKey}
-                                </option>)}
-                    </select>
+                <div className="comics-header">
+                    <div className="comics-filter">
+                        <button className="sort-by-button" onClick={(e) => sortListByKey(e)}>Sort by {sortByKey}</button>
+                        <select
+                            className="sort-by-select"
+                            value={sortByKey}
+                            onChange={(e) => setSortByKey(e.target.value)}>
+                            {issueKeys &&
+                                issueKeys.map((issueKey, index) =>
+                                    <option key={index} value={issueKey}>
+                                        {issueKey}
+                                    </option>)}
+                        </select>
+                    </div>
                 </div>}
             {list &&
                 <table className="comics-table">

@@ -42,11 +42,10 @@
 }
 
 .authenticated-app {
-  border: royalblue 1px solid;
 }
 
 .authenticated-app-header {
-  background: cadetblue;
+  background: #5772c5;
   height: 30px;
 }
 
@@ -90,13 +89,11 @@
 }
 
 .button-group {
-  border: rgb(97, 225, 65) 1px solid;
-
   /* position: relative; */
 }
 
 button {
-  background-color:#312885;  
+  background-color:#7283b5;  
   /* -webkit-border-radius: 28;  
   -moz-border-radius: 28;   */
   border-radius: 20px;
@@ -105,7 +102,7 @@ button {
   color: #fafafa;   
   font-size: 25px;  
   padding: 10px;  
-  margin: 5px;
+  margin: 5px 8px;
   cursor: pointer;
 }
 

@@ -10,6 +10,7 @@ import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 const Marval = () => {
     const [userData, setUserData] = useRecoilState(userAtom);
     const [analytics, setAnalytics] = useRecoilState(analyticsAtom);
+    const [config, setConfig] = useState({ showAnalytics: false })
     let queryFilter = {}; //TODO: add query filters
     const [comics, setComics] = useRecoilState(comicsAtom);
     const onGetUserInfo = async (e) => {
@@ -29,10 +30,11 @@ const Marval = () => {
     return (
         <div className="marval-wrapper">
             <div className="button-group">
-                <button onClick={(e) => onGetUserInfo(e)}>Get My User Info</button>
+                <button onClick={(e) => onGetUserInfo(e)}>Fetch Analytics</button>
+                <button onClick={(e) => setConfig({ ...config, showAnalytics: !config.showAnalytics })}>{config.showAnalytics ? 'Hide' : 'Show'} Analytics</button>
                 <button onClick={(e) => onGetComics(e)}>Get Marval Comics</button>
             </div>
-            <Analytics />
+            {config && config.showAnalytics && <Analytics />}
             {!!comics && <Comics data={comics} />}
         </div>)
 }

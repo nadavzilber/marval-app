@@ -25,7 +25,7 @@ const Analytics = () => {
 
     return (
         <div className="analytics-wrapper">
-            {!!analytics &&
+            {!!analytics && analytics.length &&
                 <>
                     <h4>Analytics</h4>
                     <table className="analytics-table">
