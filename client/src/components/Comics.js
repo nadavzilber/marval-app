@@ -15,15 +15,24 @@ const Comics = ({ data }) => {
         user && user.sortByKey ? setSortByKey(user.sortByKey) : setSortByKey('none');
     }, [])
 
-    const sortListByKey = (event) => {
+    const sortListByKey = async (event) => {
         event.preventDefault();
         let sortedList = [...list];
         sortedList = sortedList.sort((a, b) => (a[sortByKey] > b[sortByKey]) ? 1 : -1);
         setList(sortedList);
-        setUserInfo({ query: { email: user.email }, newData: { sortByKey } });
+        const response = await setUserInfo({ query: { email: user.email }, newData: { sortByKey } });
+        console.log('sortListByKey :: setUserInfo Response:::', response)
         updateAnalytics({ email: user.email, sortByKey });
     }
 
+    const setAsFavorite = async (issueId) => {
+        console.log('setAsFavorite', issueId)
+        setUser({ ...user, favorite: issueId })
+        const response = await setUserInfo({ query: { email: user.email }, newData: { favorite: issueId } });
+        console.log('setAsFavorite :: setUserInfo Response:::', response)
+    }
+
+    console.log('Comics.js :: todo: make the favorite button functional');
     return (
         <div>
             <h4>Comics</h4>
@@ -47,12 +56,12 @@ const Comics = ({ data }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((issue, index) => <tr className="body-row" key={index}>
+                        {list.map((issue, index) => <tr className={`body-row ${issue.id === user.favorite ? 'favorite-issue' : ''}`} key={index}>
                             {issueKeys.map((issueKey, index) => <td key={index}>
                                 {issue[issueKey]}
                             </td>)}
                             <td>
-                                <div>Favorite</div>
+                                <div className="favorite-button" onClick={() => setAsFavorite(issue.id)}>{issue.id === user.favorite ? '❤️️' : '💚'}</div>
                             </td>
                         </tr>)}
                     </tbody>

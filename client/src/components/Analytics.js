@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { getAnalytics } from '../api';
 import { analyticsAtom, userAtom } from '../state/atoms';
+import './analytics.css';
 
 const Analytics = () => {
-    //const [list, setList] = useState(data);
     const [analytics, setAnalytics] = useRecoilState(analyticsAtom);
     const [user, setUser] = useRecoilState(userAtom);
-    //const [sortByKey, setSortByKey] = useState();
     const analyticsHeaders = ['_id', 'date', 'email', 'sortByKey'];
 
     useEffect(() => {
@@ -25,17 +24,17 @@ const Analytics = () => {
     }
 
     return (
-        <div>
-            <h4>Analytics</h4>
+        <div className="analytics-wrapper">
+            <h4>Analytics {JSON.stringify(analytics)}</h4>
             {!!analytics &&
-                <table className="comics-table">
+                <table className="analytics-table">
                     <thead>
                         <tr className="header-row">
                             {analyticsHeaders.map((header, index) => <th key={index}>{header}</th>)}
                         </tr>
                     </thead>
                     <tbody>
-                        {analytics.map((analyticsRow, index) => <tr className="body-row" key={index}>
+                        {!!analytics && analytics.map((analyticsRow, index) => <tr className="body-row" key={index}>
                             {Object.values(analyticsRow).map((rowParam, index) => <td key={index}>
                                 {rowParam}
                             </td>)}

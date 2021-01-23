@@ -3,6 +3,7 @@ import AuthenticatedApp from './auth/AuthenticatedApp';
 import Login from './auth/Login';
 import Alert from './components/Alert';
 import { alertAtom, userAtom } from './state/atoms';
+import './App.css';
 
 function App() {
   const [alert, setAlert] = useRecoilState(alertAtom);

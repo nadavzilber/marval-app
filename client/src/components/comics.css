@@ -24,10 +24,20 @@
 
 .body-row {
     border: violet 1.75px solid;
-    background: #081438;
+    /* background: #081438; */
+    background-color: #1f232d;
     color: white;
 }
 
 .body-row td, .header-row th {
     padding: 10px;
+}
+
+.favorite-issue {
+    background-color: #223980;
+}
+
+.favorite-button {
+    cursor: pointer;
+    font-size: 30px;
 }
