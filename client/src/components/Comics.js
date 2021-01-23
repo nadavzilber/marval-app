@@ -8,15 +8,22 @@ const Comics = ({ data }) => {
     const [list, setList] = useState(data);
     const [user, setUser] = useRecoilState(userAtom);
     const [sortByKey, setSortByKey] = useState();
+    let lastSortByKey;
 
     const issueKeys = ['id', 'modified', 'pageCount', 'title'];
 
     useEffect(() => {
-        user && user.sortByKey ? setSortByKey(user.sortByKey) : setSortByKey('none');
+        user && user.sortByKey ? onSortByKey(user.sortByKey) : setSortByKey(null);
     }, [])
+
+    const onSortByKey = (key) => {
+        lastSortByKey = key;
+        setSortByKey(key);
+    }
 
     const sortListByKey = async (event) => {
         event.preventDefault();
+        if (lastSortByKey === sortByKey) return;
         console.log('TODO: if key wasnt changed then dont send to analytics')
         let sortedList = [...list];
         sortedList = sortedList.sort((a, b) => (a[sortByKey] > b[sortByKey]) ? 1 : -1);
@@ -43,7 +50,7 @@ const Comics = ({ data }) => {
                         <select
                             className="sort-by-select"
                             value={sortByKey}
-                            onChange={(e) => setSortByKey(e.target.value)}>
+                            onChange={(e) => onSortByKey(e.target.value)}>
                             {issueKeys &&
                                 issueKeys.map((issueKey, index) =>
                                     <option key={index} value={issueKey}>

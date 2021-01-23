@@ -1,3 +1,10 @@
 .analytics-table {
     margin: auto;
 }
+
+.analytics-title {
+    font-size: 22px;
+    letter-spacing: 0.5ch;
+    font-family: monospace;
+    color: white;
+}
