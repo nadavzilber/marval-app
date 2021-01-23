@@ -1,19 +1,13 @@
-import React from 'react';
-import { userAtom, comicsAtom, analyticsAtom } from '../state/atoms';
+import React, { useState } from 'react';
+import { userAtom } from '../state/atoms';
 import { useRecoilState } from 'recoil';
-import { getUserInfo, getComics } from '../api';
-import Comics from '../components/Comics';
-import Analytics from '../components/Analytics';
-import Octopus from '../assets/octopus.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-
+import Marval from '../components/Marval';
 
 const AuthenticatedApp = () => {
     const [userData, setUserData] = useRecoilState(userAtom);
-    const [analytics, setAnalytics] = useRecoilState(analyticsAtom);
-    let queryFilter = { moshe: true };
-    const [comics, setComics] = useRecoilState(comicsAtom);
+    const [config, setConfig] = useState({ showUserInfo: false })
 
     const logOut = (e) => {
         e.preventDefault();
@@ -21,45 +15,23 @@ const AuthenticatedApp = () => {
         setUserData({ ...userData, isLogged: false });
     }
 
-    const onGetUserInfo = async (e) => {
-        e.preventDefault();
-        const response = await getUserInfo(userData.email);
-        console.log('onGetUserInfo response:', response.user)
-        if (response && response.user && response.user.analytics)
-            setAnalytics(response.user.analytics);
-    }
-
-    const onGetComics = async (e) => {
-        e.preventDefault();
-        const response = await getComics(queryFilter);
-        //console.log('onGetComics response:', response);
-        setComics(response.comics.results);
-    }
-
     return (
         <div className="authenticated-app">
             <div className="authenticated-app-header">
-                <FontAwesomeIcon icon={faSignOutAlt} className="log-out-button" onClick={(e) => logOut(e)}/>
-                {/* <img className="octopus-logo" src={Octopus} /> */}
+                <FontAwesomeIcon icon={faSignOutAlt} className="log-out-button" onClick={(e) => logOut(e)} />
                 <div className="app-title">Authenticated App</div>
-                <FontAwesomeIcon icon={faUserCircle} className="user-button" onClick={(e) => console.log(e)}/>
+                <FontAwesomeIcon icon={faUserCircle} className="user-button" onClick={() => setConfig({ ...config, showUserInfo: !config.showUserInfo })} />
             </div>
-
-            <div className="button-group">
-                <button onClick={(e) => onGetUserInfo(e)}>Get My User Info</button>
-                <button onClick={(e) => onGetComics(e)}>Get Marval Comics</button>
+            <div className="authenticated-app-body">
+                {config && config.showUserInfo &&
+                    <div className="user-details">
+                        <div>id: {userData.id ? userData.id : userData._id}</div>
+                        <div>email: {userData.email}</div>
+                        <div>password: {userData.password}</div>
+                    </div>}
+                <Marval />
             </div>
-
-            <h2>id: {userData.id ? userData.id : userData._id}</h2>
-            <h2>email: {userData.email}</h2>
-            <h2>password: {userData.password}</h2>
-
-
-
-            <Analytics />
-
-            {!!comics && <Comics data={comics} />}
-        </div>)
+        </div >)
 }
 
 export default AuthenticatedApp;

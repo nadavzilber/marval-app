@@ -113,3 +113,16 @@ button:hover {
   background-color:#201a57;   
 }
 
+.user-details {
+  height: 50px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.user-details div {
+  margin: 15px 40px;
+  font-size: 18px;
+  font-style: italic;
+}
