@@ -1,13 +1,30 @@
-.sort-by {
+.comics-filter {
+    margin: 20px;
+    display: inline-flex;
+}
+
+.sort-by-button {
     border: 1px solid black;
     cursor: pointer;
     color: white;
-    background-color: #568756;
+    background-color: #357235;
     font-size: 23px;
+    width: 200px;
+    height: 70px;
+    margin: 10px;
+    padding: 7px;
 }
 
-.sort-by:hover {
-    background-color: #357235;
+.sort-by-button:hover {
+    background-color: #568756;
+}
+
+.sort-by-select {
+    margin: 10px;
+    padding: 10px;
+    font-size: 22px;
+    width: 140px;
+    height: 70px;
 }
 
 .issue-container {

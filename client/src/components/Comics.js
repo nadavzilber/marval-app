@@ -37,16 +37,19 @@ const Comics = ({ data }) => {
         <div>
             <h4>Comics</h4>
             {issueKeys &&
-                <select
-                    value={sortByKey}
-                    onChange={(e) => setSortByKey(e.target.value)}>
-                    {issueKeys &&
-                        issueKeys.map((issueKey, index) =>
-                            <option key={index} value={issueKey}>
-                                {issueKey}
-                            </option>)}
-                </select>}
-            <button className="sort-by" onClick={(e) => sortListByKey(e)}>Sort by {sortByKey}</button>
+                <div className="comics-filter">
+                    <button className="sort-by-button" onClick={(e) => sortListByKey(e)}>Sort by {sortByKey}</button>
+                    <select
+                        className="sort-by-select"
+                        value={sortByKey}
+                        onChange={(e) => setSortByKey(e.target.value)}>
+                        {issueKeys &&
+                            issueKeys.map((issueKey, index) =>
+                                <option key={index} value={issueKey}>
+                                    {issueKey}
+                                </option>)}
+                    </select>
+                </div>}
             {list &&
                 <table className="comics-table">
                     <thead>

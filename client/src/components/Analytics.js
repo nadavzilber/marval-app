@@ -25,22 +25,24 @@ const Analytics = () => {
 
     return (
         <div className="analytics-wrapper">
-            <h4>Analytics {JSON.stringify(analytics)}</h4>
             {!!analytics &&
-                <table className="analytics-table">
-                    <thead>
-                        <tr className="header-row">
-                            {analyticsHeaders.map((header, index) => <th key={index}>{header}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {!!analytics && analytics.map((analyticsRow, index) => <tr className="body-row" key={index}>
-                            {Object.values(analyticsRow).map((rowParam, index) => <td key={index}>
-                                {rowParam}
-                            </td>)}
-                        </tr>)}
-                    </tbody>
-                </table>}
+                <>
+                    <h4>Analytics</h4>
+                    <table className="analytics-table">
+                        <thead>
+                            <tr className="header-row">
+                                {analyticsHeaders.map((header, index) => <th key={index}>{header}</th>)}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {!!analytics && analytics.length && analytics.map((analyticsRow, index) => <tr className="body-row" key={index}>
+                                {Object.values(analyticsRow).map((rowParam, index) => <td key={index}>
+                                    {rowParam}
+                                </td>)}
+                            </tr>)}
+                        </tbody>
+                    </table>
+                </>}
         </div>
     )
 }
